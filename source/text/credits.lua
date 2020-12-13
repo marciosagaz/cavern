@@ -18,17 +18,18 @@ credits.bottom = 12752
 -- Example: if Y position was 100, text would be
 -- displayed at credits.bottom - 100
 
-table.insert(credits, {"CAVERN", "center", 2304, fonts.credits.title})
-table.insert(credits, {"Created by Kyle Schaub", "center", 4608, fonts.credits.me})
-table.insert(credits, {"All code, art, and music is available on GitHub.", "center", 6912})
-table.insert(credits, {"This is an open-source Love2D project.", "center", 7040})
-table.insert(credits, {"All of my supportive students on Udemy", "center", 9344})
-table.insert(credits, {"Everyone who helped with testing and reporting bugs", "center", 9472})
-table.insert(credits, {"Special Thanks to:", "center", 9600})
-table.insert(credits, {"Thank you for playing!", "center", 11892, fonts.credits.me})
+ local messages = _('credits')
+ table.insert(credits, {messages.game, "center", 2304, fonts.credits.title})
+ table.insert(credits, {messages.modifier, "center", 4508, fonts.credits.me})
+ table.insert(credits, {messages.creator, "center", 4608, fonts.credits.me})
+ table.insert(credits, {messages.available, "center", 6912})
+ table.insert(credits, {messages.project, "center", 7040})
+ table.insert(credits, {messages.suport, "center", 9344})
+ table.insert(credits, {messages.helped, "center", 9472})
+ table.insert(credits, {messages.special, "center", 9600})
+ table.insert(credits, {messages.thanks, "center", 11892, fonts.credits.me})
 
 function credits:draw()
-
   -- Only draw if we are in rmCredits
   if gameState.room == "rmCredits" then
     for _,w in ipairs(self) do

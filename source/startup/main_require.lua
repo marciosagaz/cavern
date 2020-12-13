@@ -41,6 +41,14 @@ function getGlobals()
 
   require("source/global/shake")
 
+  babel = require("source/text/i18n/babel")
+  babel.init({
+      locale = "pt_BR",
+      locales_folders = {
+          "source/text/i18n/locales"
+        }
+  })
+
   require("source/text/messages")
   require("source/text/scrollText")
   require("source/text/textBox")

@@ -40,10 +40,11 @@ function tutorial:draw()
   local x = 768
   local y = 320
   local sectionW = 896
+  local text = _("tutorial")
   love.graphics.setColor(1, 1, 1, self.alpha)
   love.graphics.setFont(fonts.misc.tutorial)
-  love.graphics.printf("Use the arrow keys\nor <WASD> to move", x, y, sectionW, "center")
-  love.graphics.printf("Point with the mouse\nto look around", x, y + 224, sectionW, "center")
+  love.graphics.printf(text.use_wasd, x, y, sectionW, "center")
+  love.graphics.printf(text.use_mouse, x, y + 224, sectionW, "center")
 
 end
 

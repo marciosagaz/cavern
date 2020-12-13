@@ -6,6 +6,10 @@ A 2D adventure game made with Lua and LÖVE
 
 Cavern is an open-source game written in Lua utilizing the game framework [LÖVE](https://love2d.org/). This game was created to provide LÖVE developers with a fully completed project to refer to when creating their own games.
 
+## Appending by Márcio Sagaz
+
+This project was modified to work with [babel] (https://github.com/martin-damien/babel). This game now loads files and runs in other languages. This was carried out to meet the discipline INE5653-07238 (20201) - Introduction to Internationalization and Software Localization.
+
 ## Running the game
 
 Download or clone this repo, and then run the project with LÖVE, which can be downloaded [here](https://love2d.org/). The game will only work properly with versions 11.0 or later. The easiest way to run a project with LÖVE is to drag the project folder onto a LÖVE application shortcut.

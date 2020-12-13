@@ -1,16 +1,17 @@
 -- Stores all clickable buttons on the main menu
 -- By index: X, Y, Width, Height, Message
 buttons = {}
-buttons[1] = {376, 380, 360, 72, "New Game"}
-buttons[2] = {376, 476, 360, 72, "Continue"}
+buttons[1] = {376, 360, 360, 72, ""}
+buttons[2] = {376, 456, 360, 72, ""}
+buttons[3] = {376, 552, 360, 72, ""}
 
 -- Dimensions and offset for the small corner buttons (sound and GitHub)
 local smSize = 72
 local smOffset = 14
 
 -- Place buttons 3 and 4 in the left and right corners respectively
-buttons[3] = {smOffset, gameHeight - smSize - smOffset, smSize, smSize, ".sound"}
-buttons[4] = {gameWidth - smSize - smOffset, gameHeight - smSize - smOffset, smSize, smSize, ".github"}
+buttons[4] = {smOffset, gameHeight - smSize - smOffset, smSize, smSize, ""}
+buttons[5] = {gameWidth - smSize - smOffset, gameHeight - smSize - smOffset, smSize, smSize, ""}
 
 -- This value stores the message displayed at the bottom of the menu
 buttons.message = ""
@@ -20,9 +21,16 @@ function menuDraw()
 
   if gameState.room == "rmMainMenu" then
 
+    local menu = _('menu')
+    buttons[1][5] = menu.new_game
+    buttons[2][5] = menu.continue
+    buttons[3][5] = menu.language
+    buttons[4][5] = menu.sound
+    buttons[5][5] = menu.github
+
     love.graphics.setFont(fonts.menu.title)
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.printf("CAVERN", 0, 140 * scale, gameWidth * scale, "center")
+    love.graphics.printf(menu.title, 0, 140 * scale, gameWidth * scale, "center")
 
     -- Start message off as nothing, will be updated if hovering over a button
     buttons.message = ""
@@ -45,27 +53,19 @@ function menuDraw()
         love.graphics.rectangle("line", bX, bY, bW, bH)
 
         -- Update the button message at the bottom of the screen
-        if bText == "New Game" then
-          buttons.message = "Start a new game - erases old save file"
-        elseif bText == "Continue" then
-          buttons.message = "Continue from where you left off"
-        elseif bText == ".sound" then
-          buttons.message = "Turn music and sound effects on or off"
-        elseif bText == ".github" then
-          buttons.message = "View the code on GitHub"
-        end
+        buttons.message = menu.messages[bText]
 
       end
 
       love.graphics.setColor(1, 1, 1, 1)
       love.graphics.setFont(fonts.menu.button)
 
-      if bText == ".sound" then
+      if bText == menu.sound then
         if not soundOn then
           love.graphics.setColor(0.35, 0.35, 0.35, 0.5)
         end
         love.graphics.draw(sprites.ui.sound, bX + 15 * scale, bY + 9 * scale, 0, scale, scale)
-      elseif bText == ".github" then
+      elseif bText == menu.github then
         love.graphics.draw(sprites.ui.github, bX + 9 * scale, bY + 8 * scale, 0, scale, scale)
       else
         love.graphics.printf(bText, bX, bY + 8 * scale, bW, "center")
@@ -131,8 +131,12 @@ function buttons:click()
         buttons.message = ""
         soundManager:musicFade()
         changeToMap("rmIntro")
+      
+      elseif i == 3 then -- change Language
+        
+        babel.switchToLocale(_('next_lang'))
 
-      elseif i == 3 then -- Sound button
+      elseif i == 4 then -- Sound button
 
         -- Toggle sound to be on/off
         soundOn = not soundOn
@@ -142,10 +146,11 @@ function buttons:click()
           soundManager:musicFade()
         end
 
-      elseif i == 4 then -- GitHub button
+      elseif i == 5 then -- GitHub button
 
         -- Open the GitHub page for this game!
         love.system.openURL("https://github.com/kyleschaub/cavern")
+        love.system.openURL("https://github.com/marciosagaz/cavern")
 
       end
 

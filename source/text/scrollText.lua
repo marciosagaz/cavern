@@ -13,12 +13,18 @@ scroll.charNum = 0       -- Which character of the full message we're on
 function scroll:showMessage(m)
 
   -- Sets the first set of text for the message
-  self.fullMessage = messages[m][1]
+  local messages = 'messages'
+  self.fullMessage = _(messages)[m][1]
   self.text = ""
 
   self.messageNum = 1
   self.charNum = 0
-  self.messageObj = messages[m]
+  self.messageObj = _(messages)[m]
+  if 'intro' == m then
+    self.fullMessage = babel.dateTime( "long_date_time", _(messages).date )
+      .. self.fullMessage
+      .. babel.price( 16756354.18 )
+  end
 
   -- The messages table contains other tables, each containing a set of strings
   -- which will be displayed in order to the text window.
@@ -39,6 +45,11 @@ function scroll:update(dt)
         if self.charTimer == 0 then
           self.charNum = self.charNum + 1
           self.text = string.sub(self.fullMessage, 1, self.charNum)
+
+          while (string.byte( string.sub(self.text, self.charNum, self.charNum) ) > 127) do
+            self.charNum = self.charNum + 1
+            self.text = string.sub(self.fullMessage, 1, self.charNum)
+          end
 
           self.charTimer = self.textSpeed
 
